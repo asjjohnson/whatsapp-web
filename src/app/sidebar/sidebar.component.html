@@ -1,0 +1,46 @@
+<div id="sidebar">
+    <div id="row1">
+        <div id="sidebarHeader">
+            <div class="avatarContainer">
+                <img src="../../assets/my-avatar.png" alt="Avatar">
+            </div>
+            <div class="actionsContainer">
+
+                <img src="../../assets/statusIcon.svg" alt="Status Icon">
+                <img src="../../assets/chatIcon.svg" alt="Char Icon">
+                <img src="../../assets/moreVertIcon.svg" alt="More Info Icon">
+
+            </div>
+        </div>
+        <div id="sidebarSearchBox">
+            <img width="19" src="../assets/searchIcon.svg" alt="SearchIcon">
+            <input type="text" [(ngModel)]="searchText" placeholder="Search or start the new chat" />
+        </div>
+    </div>
+
+    <div id="sidebarContent">
+        <div class="conversation" *ngFor="let conversation of !searchText ? conversations : filteredConversations"
+            (click)="conversationClicked.emit(conversation)">
+            <div class="picture">
+                <img src="../../assets/noPic.svg" alt="Contact Avatar">
+            </div>
+            <div class="content">
+                <div class="conversationHeader">
+                    <div class="name">{{conversation?.name}}</div>
+                    <div class="time">{{conversation?.timestamp * 1000 | date:'hh:mm a'}}</div>
+                </div>
+                <div class="message">
+                    <img *ngIf="conversation.unreadCount != 0 " src="../../assets/doubleTick.svg">
+                    <img *ngIf="conversation.unreadCount == 0" src="../../assets/doubleTickBlue.svg">
+                    <!-- {{conversation?.lastMessage?.body | dotdotdot:10}} -->
+                    <!-- {{ (conversation?.lastMessage?.body > 10) ? (conversation?.lastMessage?.body | slice:0:10) + '...' : conversation?.lastMessage?.body }} -->
+                    {{ (conversation?.lastMessage?.body?.length > 20) ? (conversation?.lastMessage?.body | slice:0:10) + '...' : conversation?.lastMessage?.body }}
+
+                </div>
+            </div>
+        </div>
+        <!-- <div id="noConversation">
+            All chats are archived
+        </div> -->
+    </div>
+</div>
